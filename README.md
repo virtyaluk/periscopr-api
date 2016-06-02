@@ -54,50 +54,54 @@ To start, install this library via Composer:
 
 Create a new file, including the Composer autoloader file:
 
-    <?php
-	    
-        require_once __DIR__ . '/vendor/autoload.php';
-    
-        /* Create a new instance of the API Client */
-        $periscopeClient = new Cjhbtn\Periscopr\Client();
-    
-        /* Prepare a LoginTwitter request with our OAuth credentials */
-        $loginRequest = new Cjhbtn\Periscopr\Requests\LoginTwitter(
-            'OAUTH_TOKEN GOES HERE',
-            'OAUTH_TOKEN_SECRET GOES HERE',
-            'TWITTER_USERNAME GOES HERE'
-        );
-    
-        /* Execute the request against the API */
-        $loginResponse = $periscopeClient->execute($loginRequest);
-    
-        /* Check to see if the request was successful */
-        if ($loginResponse->getStatusCode() !== 200) {
-            die("Unable to login to Periscope API");
-        }
-    
-        /* Set our authentication cookie for all future requests */
-        $periscopeClient->setCookie($loginResponse->cookie);
-    
-        /* Prepare a new GetFeedLive request */
-        $liveBroadcastsRequest = new Cjhbtn\Periscopr\Requests\GetFeedLive();
-    
-        /* Execute the request against the API */
-        $liveBroadcastsResponse = $periscopeClient->execute($liveBroadcastsRequest);
-    
-        /* Check to see if the request was successful */
-        if ($liveBroadcastsResponse->getStatusCode() !== 200) {
-            die("Unable to fetch Live Broadcasts from Periscope API");
-        }
-    
-        /* Output the contents of the results */
-        echo json_encode($liveBroadcastsResponse->results[0]);
-		
-	?>
+```php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+/* Create a new instance of the API Client */
+$periscopeClient = new Cjhbtn\Periscopr\Client();
+
+/* Prepare a LoginTwitter request with our OAuth credentials */
+$loginRequest = new Cjhbtn\Periscopr\Requests\LoginTwitter(
+    'OAUTH_TOKEN GOES HERE',
+    'OAUTH_TOKEN_SECRET GOES HERE',
+    'TWITTER_USERNAME GOES HERE'
+);
+
+/* Execute the request against the API */
+$loginResponse = $periscopeClient->execute($loginRequest);
+
+/* Check to see if the request was successful */
+if ($loginResponse->getStatusCode() !== 200) {
+    die("Unable to login to Periscope API");
+}
+
+/* Set our authentication cookie for all future requests */
+$periscopeClient->setCookie($loginResponse->cookie);
+
+/* Prepare a new GetFeedLive request */
+$liveBroadcastsRequest = new Cjhbtn\Periscopr\Requests\GetFeedLive();
+
+/* Execute the request against the API */
+$liveBroadcastsResponse = $periscopeClient->execute($liveBroadcastsRequest);
+
+/* Check to see if the request was successful */
+if ($liveBroadcastsResponse->getStatusCode() !== 200) {
+    die("Unable to fetch Live Broadcasts from Periscope API");
+}
+
+/* Output the contents of the results */
+echo json_encode($liveBroadcastsResponse->results[0]);
+
+?>
+```
 
 Which should output data like so:
 
-    {"id":"14966200","created_at":"2015-05-28T06:58:49.321065911-07:00","updated_at":"2015-05-28T06:59:19.438217730-07:00","user_id":"3210175","user_display_name":"Melih_1903_M28","profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/603844955879137280\/PqDWz5qk_reasonably_small.jpg","state":"RUNNING","is_locked":false,"friend_chat":false,"start":"2015-05-28T06:59:19.088067277-07:00","ping":"2015-05-28T06:59:19.438217730-07:00","has_location":false,"city":"","country":"","country_state":"","iso_code":"DE","ip_lat":0,"ip_lng":0,"width":320,"height":568,"image_url":"https:\/\/s3-us-west-2.amazonaws.com\/periscope-thumbnail-live\/nYt0DICNlBTWbbO9i4JPH-4vZYECfiUg4Ie9k7RlbC8zfi_78pPRDfvWlT1Mhbqrg-HrUhmT9wESvA6cZYOIYw==.jpg?AWSAccessKeyId=AKIAI34LQJZZSVNMNOFQ&Expires=1748440729&Signature=mSruul3wJPUghUfSUqExfmPBb6s%3D","image_url_small":"https:\/\/s3-us-west-2.amazonaws.com\/periscope-thumbnail-live-thumb\/nYt0DICNlBTWbbO9i4JPH-4vZYECfiUg4Ie9k7RlbC8zfi_78pPRDfvWlT1Mhbqrg-HrUhmT9wESvA6cZYOIYw==_thumb_128.jpg?AWSAccessKeyId=AKIAI34LQJZZSVNMNOFQ&Expires=1748440729&Signature=FkehRaNxi9r%2BbosgU7kNfDS5GRM%3D","status":"Yaz\u0131n bi\u015feyler....I\u00e7inizden de ge\u00e7iyorsa :D","available_for_replay":false,"featured":false,"sort_score":1432821559,"is_trusted":false,"class_name":"Broadcast"}
+```json
+{"id":"14966200","created_at":"2015-05-28T06:58:49.321065911-07:00","updated_at":"2015-05-28T06:59:19.438217730-07:00","user_id":"3210175","user_display_name":"Melih_1903_M28","profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/603844955879137280\/PqDWz5qk_reasonably_small.jpg","state":"RUNNING","is_locked":false,"friend_chat":false,"start":"2015-05-28T06:59:19.088067277-07:00","ping":"2015-05-28T06:59:19.438217730-07:00","has_location":false,"city":"","country":"","country_state":"","iso_code":"DE","ip_lat":0,"ip_lng":0,"width":320,"height":568,"image_url":"https:\/\/s3-us-west-2.amazonaws.com\/periscope-thumbnail-live\/nYt0DICNlBTWbbO9i4JPH-4vZYECfiUg4Ie9k7RlbC8zfi_78pPRDfvWlT1Mhbqrg-HrUhmT9wESvA6cZYOIYw==.jpg?AWSAccessKeyId=AKIAI34LQJZZSVNMNOFQ&Expires=1748440729&Signature=mSruul3wJPUghUfSUqExfmPBb6s%3D","image_url_small":"https:\/\/s3-us-west-2.amazonaws.com\/periscope-thumbnail-live-thumb\/nYt0DICNlBTWbbO9i4JPH-4vZYECfiUg4Ie9k7RlbC8zfi_78pPRDfvWlT1Mhbqrg-HrUhmT9wESvA6cZYOIYw==_thumb_128.jpg?AWSAccessKeyId=AKIAI34LQJZZSVNMNOFQ&Expires=1748440729&Signature=FkehRaNxi9r%2BbosgU7kNfDS5GRM%3D","status":"Yaz\u0131n bi\u015feyler....I\u00e7inizden de ge\u00e7iyorsa :D","available_for_replay":false,"featured":false,"sort_score":1432821559,"is_trusted":false,"class_name":"Broadcast"}
+```
 
 ----------
 
